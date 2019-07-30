@@ -1,0 +1,229 @@
+package ${package.Entity.replace("model","criteria")};
+
+import cn.hutool.core.collection.CollUtil;
+import com.compent.database.criteria.AbstractCriteria;
+import ${package.Entity}.${entity};
+import lombok.Getter;
+
+import java.util.Set;
+import java.util.Date;
+
+/**
+ * $!{table.comment} 查询条件
+ *
+ * @author ${author}
+ */
+@Getter
+public class ${entity}Criteria extends AbstractCriteria<${entity}> {
+
+## ----------  BEGIN 字段循环遍历 添加成员变量 ----------
+#foreach($field in ${table.fields})
+    /************************************************** ${field.propertyName} **************************************************/
+
+## ----------  所有字段类型都有的查询条件  ----------
+    private ${field.propertyType} ${field.propertyName};
+
+    private ${field.propertyType} or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)};
+
+    private Set<${field.propertyType}> ${field.propertyName}In;
+
+    private Set<${field.propertyType}> or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}In;
+
+    private Set<${field.propertyType}> ${field.propertyName}NotIn;
+
+    private Set<${field.propertyType}> or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotIn;
+
+## ----------  String字段类型都有的查询条件  ----------
+#if(${field.propertyType} == "String")
+    private ${field.propertyType} ${field.propertyName}Like;
+
+    private ${field.propertyType} or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}Like;
+
+    private ${field.propertyType} ${field.propertyName}NotLike;
+
+    private ${field.propertyType} or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotLike;
+
+
+## ----------  Integer、Long、Date、BigDecimal字段类型都有的查询条件  ----------
+#elseif(${field.propertyType} == "Integer" || ${field.propertyType} == "Long" || ${field.propertyType} == "Date" || ${field.propertyType} == "BigDecimal")
+    private ${field.propertyType} ${field.propertyName}NotEqual;
+
+    private ${field.propertyType} or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotEqual;
+
+    private ${field.propertyType} ${field.propertyName}LessThan;
+
+    private ${field.propertyType} or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}LessThan;
+
+    private ${field.propertyType} ${field.propertyName}LessThanEqual;
+
+    private ${field.propertyType} or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}LessThanEqual;
+
+    private ${field.propertyType} ${field.propertyName}GreaterThan;
+
+    private ${field.propertyType} or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}GreaterThan;
+
+    private ${field.propertyType} ${field.propertyName}GreaterThanEqual;
+
+    private ${field.propertyType} or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}GreaterThanEqual;
+#end
+
+#end
+## ----------  END 字段循环遍历 添加成员变量 ----------
+## ----------  BEGIN 字段循环遍历 添加setter方法  ----------
+#foreach($field in ${table.fields})
+    /************************************************** ${field.propertyName} **************************************************/
+
+## ----------  所有字段类型都有的 setter 方法  ----------
+    public ${entity}Criteria set${field.CapitalName}(${field.propertyType} ${field.propertyName}) {
+        this.${field.propertyName} = ${field.propertyName};
+        equals(${entity}.${field.name.toUpperCase()}, this.${field.propertyName});
+        return this;
+    }
+
+    public ${entity}Criteria setOr${field.CapitalName}(${field.propertyType} or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}) {
+        this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)} = or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)};
+        orEquals(${entity}.${field.name.toUpperCase()}, this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)});
+        return this;
+    }
+
+    public ${entity}Criteria set${field.CapitalName}In(Set<${field.propertyType}> ${field.propertyName}In) {
+        this.${field.propertyName}In = ${field.propertyName}In;
+        in(${entity}.${field.name.toUpperCase()}, this.${field.propertyName}In);
+        return this;
+    }
+
+    public ${entity}Criteria setOr${field.CapitalName}In(Set<${field.propertyType}> or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}In) {
+        this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}In = or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}In;
+        orIn(${entity}.${field.name.toUpperCase()}, this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}In);
+        return this;
+    }
+
+    public ${entity}Criteria set${field.CapitalName}NotIn(Set<${field.propertyType}> ${field.propertyName}NotIn) {
+        this.${field.propertyName}NotIn = ${field.propertyName}NotIn;
+        notIn(${entity}.${field.name.toUpperCase()}, this.${field.propertyName}NotIn);
+        return this;
+    }
+
+    public ${entity}Criteria setOr${field.CapitalName}NotIn(Set<${field.propertyType}> or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotIn) {
+        this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotIn = or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotIn;
+        orNotIn(${entity}.${field.name.toUpperCase()}, this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotIn);
+        return this;
+    }
+
+    public ${entity}Criteria set${field.CapitalName}In(${field.propertyType}... ${field.propertyName}In) {
+        this.${field.propertyName}In = CollUtil.newHashSet(${field.propertyName}In);
+        in(${entity}.${field.name.toUpperCase()}, this.${field.propertyName}In);
+        return this;
+    }
+
+    public ${entity}Criteria setOr${field.CapitalName}In(${field.propertyType}... or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}In) {
+        this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}In = CollUtil.newHashSet(or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}In);
+        orIn(${entity}.${field.name.toUpperCase()}, this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}In);
+        return this;
+    }
+
+    public ${entity}Criteria set${field.CapitalName}NotIn(${field.propertyType}... ${field.propertyName}NotIn) {
+        this.${field.propertyName}NotIn = CollUtil.newHashSet(${field.propertyName}NotIn);
+        notIn(${entity}.${field.name.toUpperCase()}, this.${field.propertyName}NotIn);
+        return this;
+    }
+
+    public ${entity}Criteria setOr${field.CapitalName}NotIn(${field.propertyType}... or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotIn) {
+        this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotIn = CollUtil.newHashSet(or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotIn);
+        orNotIn(${entity}.${field.name.toUpperCase()}, this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotIn);
+        return this;
+    }
+
+## ----------  String字段类型都有的 setter 方法  ----------
+    #if(${field.propertyType} == "String")
+    public ${entity}Criteria set${field.CapitalName}Like(${field.propertyType} ${field.propertyName}Like) {
+        this.${field.propertyName}Like = ${field.propertyName}Like == null ? null : ${field.propertyName}Like.trim();
+        like(${entity}.${field.name.toUpperCase()}, this.${field.propertyName}Like);
+        return this;
+    }
+
+    public ${entity}Criteria setOr${field.CapitalName}Like(${field.propertyType} or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}Like) {
+        this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}Like = or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}Like == null ? null : or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}Like.trim();
+        orLike(${entity}.${field.name.toUpperCase()}, this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}Like);
+        return this;
+    }
+
+    public ${entity}Criteria set${field.CapitalName}NotLike(${field.propertyType} ${field.propertyName}NotLike) {
+        this.${field.propertyName}NotLike = ${field.propertyName}NotLike == null ? null : ${field.propertyName}NotLike.trim();
+        notLike(${entity}.${field.name.toUpperCase()}, this.${field.propertyName}NotLike);
+        return this;
+    }
+
+    public ${entity}Criteria setOr${field.CapitalName}NotLike(${field.propertyType} or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotLike) {
+        this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotLike = or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotLike == null ? null : or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotLike.trim();
+        orNotLike(${entity}.${field.name.toUpperCase()}, this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotLike);
+        return this;
+    }
+
+
+    ## ----------  Integer、Long、Date、BigDecimal字段类型都有的 setter 方法  ----------
+#elseif(${field.propertyType} == "Integer" || ${field.propertyType} == "Long" || ${field.propertyType} == "Date" || ${field.propertyType} == "BigDecimal")
+    public ${entity}Criteria set${field.CapitalName}NotEqual(${field.propertyType} ${field.propertyName}NotEqual) {
+        this.${field.propertyName}NotEqual = ${field.propertyName}NotEqual;
+        notEquals(${entity}.${field.name.toUpperCase()}, this.${field.propertyName}NotEqual);
+        return this;
+    }
+
+    public ${entity}Criteria setOr${field.CapitalName}NotEqual(${field.propertyType} or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotEqual) {
+        this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotEqual = or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotEqual;
+        orNotEquals(${entity}.${field.name.toUpperCase()}, this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}NotEqual);
+        return this;
+    }
+
+    public ${entity}Criteria set${field.CapitalName}LessThan(${field.propertyType} ${field.propertyName}LessThan) {
+        this.${field.propertyName}LessThan = ${field.propertyName}LessThan;
+        lessThan(${entity}.${field.name.toUpperCase()}, this.${field.propertyName}LessThan);
+        return this;
+    }
+
+    public ${entity}Criteria setOr${field.CapitalName}LessThan(${field.propertyType} or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}LessThan) {
+        this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}LessThan = or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}LessThan;
+        orLessThan(${entity}.${field.name.toUpperCase()}, this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}LessThan);
+        return this;
+    }
+
+    public ${entity}Criteria set${field.CapitalName}LessThanEqual(${field.propertyType} ${field.propertyName}LessThanEqual) {
+        this.${field.propertyName}LessThanEqual = ${field.propertyName}LessThanEqual;
+        lessThanEqual(${entity}.${field.name.toUpperCase()}, this.${field.propertyName}LessThanEqual);
+        return this;
+    }
+
+    public ${entity}Criteria setOr${field.CapitalName}LessThanEqual(${field.propertyType} or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}LessThanEqual) {
+        this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}LessThanEqual = or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}LessThanEqual;
+        orLessThanEqual(${entity}.${field.name.toUpperCase()}, this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}LessThanEqual);
+        return this;
+    }
+
+    public ${entity}Criteria set${field.CapitalName}GreaterThan(${field.propertyType} ${field.propertyName}GreaterThan) {
+        this.${field.propertyName}GreaterThan = ${field.propertyName}GreaterThan;
+        greaterThan(${entity}.${field.name.toUpperCase()}, this.${field.propertyName}GreaterThan);
+        return this;
+    }
+
+    public ${entity}Criteria setOr${field.CapitalName}GreaterThan(${field.propertyType} or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}GreaterThan) {
+        this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}GreaterThan = or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}GreaterThan;
+        orGreaterThan(${entity}.${field.name.toUpperCase()}, this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}GreaterThan);
+        return this;
+    }
+
+    public ${entity}Criteria set${field.CapitalName}GreaterThanEqual(${field.propertyType} ${field.propertyName}GreaterThanEqual) {
+        this.${field.propertyName}GreaterThanEqual = ${field.propertyName}GreaterThanEqual;
+        greaterThanEqual(${entity}.${field.name.toUpperCase()}, this.${field.propertyName}GreaterThanEqual);
+        return this;
+    }
+
+    public ${entity}Criteria setOr${field.CapitalName}GreaterThanEqual(${field.propertyType} or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}GreaterThanEqual) {
+        this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}GreaterThanEqual = or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}GreaterThanEqual;
+        orGreaterThanEqual(${entity}.${field.name.toUpperCase()}, this.or${field.propertyName.substring(0,1).toUpperCase()}${field.propertyName.substring(1)}GreaterThanEqual);
+        return this;
+    }
+#end
+
+#end
+## ----------  END 字段循环遍历  ----------
+}

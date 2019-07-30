@@ -1,0 +1,15 @@
+package ${package.Service};
+
+import ${package.Entity}.${entity};
+import com.compent.database.service.AbstractService;
+
+/**
+ * <p>
+ * $!{table.comment} 服务
+ * </p>
+ *
+ * @author ${author}
+ */
+public interface ${table.serviceName} extends AbstractService<${entity}> {
+
+}
