@@ -24,7 +24,7 @@
         <aliyun.version>1.8.0.Final</aliyun.version>
         <mybatis-plus.version>3.1.2</mybatis-plus.version>
         <org.slf4j.version>1.7.25</org.slf4j.version>
-        <ch.qos.logback.version>1.2.3</ch.qos.logback.version>
+        <ch.qos.logback.version>1.2.13</ch.qos.logback.version>
     </properties>
 
     <dependencies>
